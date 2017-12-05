@@ -25,9 +25,9 @@ spring:
 spring:
     profiles: dev
     datasource:
-        url: jdbc:mysql://www.ufengtech.xyz:3306/network?useUnicode=yes&characterEncoding=UTF-8
+        url: jdbc:mysql://127.0.0.1:3306/network?useUnicode=yes&characterEncoding=UTF-8
         username: root
-        password: Water.01
+        password: root
 
 server:
     port: 8080

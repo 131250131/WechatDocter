@@ -4,10 +4,12 @@ import cn.edu.nju.software.master17.wechatdocter.models.Category;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.ArrayList;
 
 @Transactional
 public interface CategoryDao extends CrudRepository<Category,Long>{
 
-    List<Category> findByPid(Long pid);
+    ArrayList<Category> findByPid(Long pid);
+
+    Category findById(Long categoryId);
 }
