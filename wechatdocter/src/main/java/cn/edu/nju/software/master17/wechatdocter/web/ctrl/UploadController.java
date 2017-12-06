@@ -1,6 +1,7 @@
 package cn.edu.nju.software.master17.wechatdocter.web.ctrl;
 
 
+import cn.edu.nju.software.master17.wechatdocter.common.constant.PhotoCategories;
 import cn.edu.nju.software.master17.wechatdocter.service.UploadService;
 import cn.edu.nju.software.master17.wechatdocter.web.data.PhotoVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,11 @@ public class UploadController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public PhotoVO uploadImage(@RequestParam("file") MultipartFile file,
-                               @RequestParam("uid") Long userId,
-                               @RequestParam("categoryId") Long categoryId){
+                               @RequestParam(name = "uid") Long userId,
+                               @RequestParam(name = "categoryId") Long categoryId){
+        if(categoryId == null) {
+            categoryId = PhotoCategories.TONGUE;
+        }
         return uploadService.uploadImage(file, userId, categoryId);
     }
 }
