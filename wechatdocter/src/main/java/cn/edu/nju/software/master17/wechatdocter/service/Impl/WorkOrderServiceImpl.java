@@ -1,7 +1,6 @@
 package cn.edu.nju.software.master17.wechatdocter.service.Impl;
 
 import cn.edu.nju.software.master17.wechatdocter.dao.WorkOrderDao;
-import cn.edu.nju.software.master17.wechatdocter.models.Chat;
 import cn.edu.nju.software.master17.wechatdocter.models.WorkOrder;
 import cn.edu.nju.software.master17.wechatdocter.service.ChatService;
 import cn.edu.nju.software.master17.wechatdocter.service.WorkOrderService;
@@ -14,7 +13,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- * Created by csc on 2017/12/7.
+ *
+ * @author csc
+ * @date 2017/12/7
  */
 @Service
 public class WorkOrderServiceImpl implements WorkOrderService {
