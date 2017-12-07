@@ -18,6 +18,6 @@ public class WorkOrderVO {
     private Integer type;
     private ArrayList<PhotoVO> photos;
     private Timestamp time;
-    private Long userId;
+    private Long patientId;
 
 }

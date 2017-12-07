@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class ChatVO {
     private String description;
     private Long chatId;
-    private Long workerId;
-    private Long userId;
+    private Long workOrderId;
+    private Long patientId;
     private Integer sequenceId;
     private ArrayList<PhotoVO> photos;
     private Timestamp time;

@@ -23,4 +23,6 @@ public interface WorkOrderService {
 
     ArrayList<WorkOrderVO> getAllWorkOrderOfDocter();
 
+    WorkOrderVO getWorkOrderById(Long workOrderId);
+
 }

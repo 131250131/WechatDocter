@@ -42,4 +42,9 @@ public class WorkOrderServiceImpl implements WorkOrderService {
     public ArrayList<WorkOrderVO> getAllWorkOrderOfDocter() {
         return null;
     }
+
+    @Override
+    public WorkOrderVO getWorkOrderById(Long workOrderId) {
+        return null;
+    }
 }
