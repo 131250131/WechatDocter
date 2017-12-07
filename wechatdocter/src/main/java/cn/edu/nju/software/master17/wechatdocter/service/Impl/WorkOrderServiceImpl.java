@@ -24,7 +24,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
     }
 
     @Override
-    public WorkOrderVO removeWorkOrderId(WorkOrderVO workOrderVO) {
+    public WorkOrderVO removeWorkOrder(WorkOrderVO workOrderVO) {
         return null;
     }
 

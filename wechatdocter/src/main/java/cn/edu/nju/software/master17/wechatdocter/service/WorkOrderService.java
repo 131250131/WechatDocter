@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public interface WorkOrderService {
     WorkOrderVO newWorkOrder(WorkOrderVO workOrderVO);
 
-    WorkOrderVO removeWorkOrderId(WorkOrderVO workOrderVO);
+    WorkOrderVO removeWorkOrder(WorkOrderVO workOrderVO);
 
     WorkOrderVO updateWorkOrder(WorkOrderVO workOrderVO);
 
