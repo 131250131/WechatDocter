@@ -15,7 +15,7 @@ public class WorkOrderVO {
 
     private Long workOrderId;
     private String description;
-    private Integer type;
+    private String type;
     private ArrayList<PhotoVO> photos;
     private Timestamp time;
     private Long patientId;

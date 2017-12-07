@@ -20,5 +20,5 @@ public class ChatVO {
     private Integer sequenceId;
     private ArrayList<PhotoVO> photos;
     private Timestamp time;
-    private Integer type;
+    private String type;
 }
