@@ -14,9 +14,7 @@ import java.util.ArrayList;
 public class WorkOrderVO {
 
     private Long workOrderId;
-    private String description;
-    private String type;
-    private ArrayList<PhotoVO> photos;
+    private ArrayList<ChatVO> chats;
     private Timestamp time;
     private Long patientId;
 

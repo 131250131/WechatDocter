@@ -40,7 +40,7 @@ public class MessageController {
     @RequestMapping(value = "/message/workorder", method = RequestMethod.POST)
     public WorkOrderVO createWorkOrder(@RequestBody @NotNull WorkOrderVO workOrderVO) {
         WorkOrderVO result = null;
-        if (workOrderVO.getPatientId()!=null && workOrderVO.getType()!=null) {
+        if (workOrderVO.getPatientId()!=null) {
             result = workOrderService.newWorkOrder(workOrderVO);
         }else {
             throw new HttpBadParamsException("patientId can't be empty");
@@ -77,6 +77,10 @@ public class MessageController {
         return result;
     }
 
+    @RequestMapping(value = "hello", method = RequestMethod.GET)
+    public String  hello() {
+        return "hello spring ";
+    }
 
 
 

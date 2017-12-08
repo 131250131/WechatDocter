@@ -30,14 +30,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
     public WorkOrderVO newWorkOrder(WorkOrderVO workOrderVO) {
         WorkOrder workOrder = new WorkOrder();
         workOrder.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        workOrder.setDescription(workOrderVO.getDescription());
         workOrder.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         workOrder.setUserId(workOrderVO.getPatientId());
         workOrder = workOrderDao.save(workOrder);
         ChatVO chatVO = new ChatVO();
         chatVO.setWorkOrderId(workOrder.getId());
-        chatVO.setType(workOrderVO.getType());
-        chatVO.setDescription(workOrderVO.getDescription());
         chatVO = chatService.addChat2WorkOrder(chatVO);
 
 

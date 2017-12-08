@@ -1,6 +1,5 @@
 package cn.edu.nju.software.master17.wechatdocter.models;
 
-import com.sun.org.glassfish.external.statistics.TimeStatistic;
 import lombok.Data;
 
 import javax.persistence.*;
