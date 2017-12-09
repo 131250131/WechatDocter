@@ -1,11 +1,15 @@
 package cn.edu.nju.software.master17.wechatdocter.service.Impl;
 
 import cn.edu.nju.software.master17.wechatdocter.dao.ChatDao;
+import cn.edu.nju.software.master17.wechatdocter.dao.Photo2ChatDao;
+import cn.edu.nju.software.master17.wechatdocter.dao.PhotoDao;
 import cn.edu.nju.software.master17.wechatdocter.dao.WorkOrderDao;
 import cn.edu.nju.software.master17.wechatdocter.models.Chat;
+import cn.edu.nju.software.master17.wechatdocter.models.Photo;
+import cn.edu.nju.software.master17.wechatdocter.models.Photo2Chat;
 import cn.edu.nju.software.master17.wechatdocter.service.ChatService;
 import cn.edu.nju.software.master17.wechatdocter.web.data.ChatVO;
-import cn.edu.nju.software.master17.wechatdocter.web.data.WorkOrderVO;
+import cn.edu.nju.software.master17.wechatdocter.web.data.PhotoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +30,12 @@ public class ChatServiceImpl implements ChatService{
 
     @Autowired
     private WorkOrderDao workOrderDao;
+
+    @Autowired
+    private PhotoDao photoDao;
+
+    @Autowired
+    private Photo2ChatDao photo2ChatDao;
 
     @Override
     public ChatVO addChat2WorkOrder(ChatVO chatVO) {
@@ -49,6 +59,30 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public ArrayList<ChatVO> getChatsByWorkOrderId(Long workOrderId) {
         ArrayList<ChatVO> result = new ArrayList<ChatVO>();
+        ArrayList<Chat> chats = chatDao.findByWorkOrderId(workOrderId);
+        for(Chat chat: chats) {
+            ChatVO chatVO = new ChatVO();
+            chatVO.setDescription(chat.getDescription());
+            chatVO.setWorkOrderId(chat.getWorkOrderId());
+            chatVO.setSequenceId(chat.getSequenceId());
+            chatVO.setChatId(chat.getId());
+            chatVO.setPhotos(getPhotoVOByChatId(chat.getId()));
+            chatVO.setType(chat.getType()==1?"inquiry":"diagnostic");
+        }
+        return result;
+    }
+
+    private ArrayList<PhotoVO> getPhotoVOByChatId(Long chatId) {
+        ArrayList<PhotoVO> result = new ArrayList<PhotoVO>();
+        ArrayList<Photo2Chat> photo2Chats = photo2ChatDao.findByChatId(chatId);
+        for(Photo2Chat photo2Chat: photo2Chats) {
+            PhotoVO photoVO = new PhotoVO();
+            Photo photo = photoDao.findOne(photo2Chat.getPhotoId());
+            photoVO.setCategoryId(photo.getCategoryId());
+            photoVO.setId(photo.getId());
+            photoVO.setUrl(photo.getUrl());
+            result.add(photoVO);
+        }
         return result;
     }
 

@@ -17,5 +17,6 @@ public class WorkOrderVO {
     private ArrayList<ChatVO> chats;
     private Timestamp time;
     private Long patientId;
+    private String description;
 
 }

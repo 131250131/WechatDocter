@@ -32,15 +32,19 @@ public class WorkOrderServiceImpl implements WorkOrderService {
         workOrder.setCreateTime(new Timestamp(System.currentTimeMillis()));
         workOrder.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         workOrder.setUserId(workOrderVO.getPatientId());
+        workOrder.setDescription(workOrderVO.getDescription());
         workOrder = workOrderDao.save(workOrder);
         ChatVO chatVO = new ChatVO();
         chatVO.setWorkOrderId(workOrder.getId());
         chatVO = chatService.addChat2WorkOrder(chatVO);
-
-
-
-
-        return null;
+        ArrayList<ChatVO> chatVOS  = new ArrayList<ChatVO>();
+        chatVOS.add(chatVO);
+        workOrderVO.setChats(chatVOS);
+        workOrderVO.setDescription(workOrder.getDescription());
+        workOrderVO.setPatientId(workOrder.getUserId());
+        workOrderVO.setWorkOrderId(workOrder.getId());
+        workOrderVO.setTime(workOrder.getUpdateTime());
+        return workOrderVO;
     }
 
     @Override
@@ -55,17 +59,41 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 
     @Override
     public ArrayList<WorkOrderVO> getAllWorkOrderByUserId(Long userId) {
-        return null;
+        ArrayList<WorkOrderVO> result = new ArrayList<WorkOrderVO>();
+        Iterable<WorkOrder> iterable =  workOrderDao.findByUserId(userId);
+        for(WorkOrder workOrder: iterable) {
+            WorkOrderVO workOrderVO =  workOrder2WorkOrderVO(workOrder);
+            result.add(workOrderVO);
+        }
+        return result;
     }
 
     @Override
     public ArrayList<WorkOrderVO> getAllWorkOrderOfDocter() {
-
-        return null;
+        ArrayList<WorkOrderVO> result = new ArrayList<WorkOrderVO>();
+        Iterable<WorkOrder> iterable =  workOrderDao.findAll();
+        for(WorkOrder workOrder: iterable) {
+            WorkOrderVO workOrderVO = workOrder2WorkOrderVO(workOrder);
+            result.add(workOrderVO);
+        }
+        return result;
     }
 
     @Override
     public WorkOrderVO getWorkOrderById(Long workOrderId) {
-        return null;
+        WorkOrderVO result = new WorkOrderVO();
+        WorkOrder workOrder = workOrderDao.findById(workOrderId);
+        result = workOrder2WorkOrderVO(workOrder);
+        result.setChats(chatService.getChatsByWorkOrderId(workOrderId));
+        return result;
+    }
+
+    private WorkOrderVO workOrder2WorkOrderVO(WorkOrder workOrder) {
+        WorkOrderVO workOrderVO =  new WorkOrderVO();
+        workOrderVO.setTime(workOrder.getUpdateTime());
+        workOrderVO.setPatientId(workOrder.getUserId());
+        workOrderVO.setWorkOrderId(workOrder.getId());
+        workOrderVO.setDescription(workOrder.getDescription());
+        return workOrderVO;
     }
 }
