@@ -14,4 +14,5 @@ import java.util.ArrayList;
 @Transactional
 public interface Photo2ChatDao extends CrudRepository<Photo2Chat, Long>{
     ArrayList<Photo2Chat> findByChatId(Long chatId);
+    Photo2Chat findByPhotoIdAndChatId(Long photoId, Long chatId);
 }

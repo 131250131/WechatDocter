@@ -3,6 +3,7 @@ package cn.edu.nju.software.master17.wechatdocter.web.ctrl;
 import cn.edu.nju.software.master17.wechatdocter.service.ChatService;
 import cn.edu.nju.software.master17.wechatdocter.service.WorkOrderService;
 import cn.edu.nju.software.master17.wechatdocter.web.data.ChatVO;
+import cn.edu.nju.software.master17.wechatdocter.web.data.PhotoVO;
 import cn.edu.nju.software.master17.wechatdocter.web.data.WorkOrderVO;
 import cn.edu.nju.software.master17.wechatdocter.web.exception.HttpBadParamsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,18 @@ public class MessageController {
     public ArrayList<WorkOrderVO> getAllWorkOrderOfDocter() {
         ArrayList<WorkOrderVO> result = null;
         result = workOrderService.getAllWorkOrderOfDocter();
+        return result;
+    }
+
+    @RequestMapping(value = "photo", method = RequestMethod.PUT)
+    public PhotoVO updatePhotoVO(@RequestBody PhotoVO photoVO) {
+        PhotoVO result = null;
+        if(photoVO.getId()!=null) {
+            result = chatService.updatePhoto(photoVO);
+        }else {
+            throw new HttpBadParamsException("photoId can't be empty");
+        }
+
         return result;
     }
 

@@ -47,7 +47,6 @@ public class ChatServiceImpl implements ChatService{
         chat.setWorkOrderId(chatVO.getWorkOrderId());
         chat.setCreateTime(new Timestamp(System.currentTimeMillis()));
         chat.setSequenceId(calculateSequenceIdForChat(chatVO.getWorkOrderId()));
-
         chat = chatDao.save(chat);
         result.setPatientId(getUserIdByWorkOrderId(chat.getWorkOrderId()));
         result.setDescription(chat.getDescription());
@@ -56,10 +55,11 @@ public class ChatServiceImpl implements ChatService{
         result.setWorkOrderId(chat.getWorkOrderId());
         result.setChatId(chat.getId());
         for (PhotoVO photoVO: chatVO.getPhotos()){
-            Photo photo = new Photo();
-            photo.setUrl(photoVO.getUrl());
-            photo.setUserId(chatVO.getChatId());
-            photo = photoDao.save(photo);
+            Photo2Chat photo2Chat = new Photo2Chat();
+            photo2Chat.setActive(true);
+            photo2Chat.setChatId(chat.getId());
+            photo2Chat.setPhotoId(photoVO.getId());
+            photo2ChatDao.save(photo2Chat);
         }
         result.setPhotos(chatVO.getPhotos());
         return result;
@@ -81,6 +81,7 @@ public class ChatServiceImpl implements ChatService{
         return result;
     }
 
+    // photos need to be checked
     @Override
     public ChatVO updateChat(ChatVO chatVO) {
         ChatVO result = new ChatVO();
@@ -92,6 +93,23 @@ public class ChatServiceImpl implements ChatService{
         chat.setType(chatVO.getType().equals("inquiry")?1:0);
         chat.setId(chatVO.getChatId());
         chat = chatDao.save(chat);
+        for(Photo2Chat photo2Chat: photo2ChatDao.findByChatId(chat.getId())) {
+            photo2Chat.setActive(false);
+            photo2ChatDao.save(photo2Chat);
+        }
+        for(PhotoVO photoVO: chatVO.getPhotos()) {
+            Photo2Chat photo2Chat = photo2ChatDao.findByPhotoIdAndChatId(photoVO.getId(), chat.getId());
+            if(photo2Chat==null) {
+                photo2Chat.setActive(true);
+                photo2ChatDao.save(photo2Chat);
+            } else {
+                Photo2Chat newChat2Photo = new Photo2Chat();
+                newChat2Photo.setActive(true);
+                newChat2Photo.setPhotoId(photoVO.getId());
+                newChat2Photo.setChatId(chat.getId());
+                photo2ChatDao.save(newChat2Photo);
+            }
+        }
         result.setPatientId(getUserIdByWorkOrderId(chat.getWorkOrderId()));
         result.setDescription(chat.getDescription());
         result.setSequenceId(chat.getSequenceId());
@@ -99,6 +117,14 @@ public class ChatServiceImpl implements ChatService{
         result.setWorkOrderId(chat.getWorkOrderId());
         result.setChatId(chat.getId());
         return result;
+    }
+
+    @Override
+    public PhotoVO updatePhoto(PhotoVO photoVO) {
+        Photo photo = photoDao.findById(photoVO.getId());
+        photo.setCategoryId(photoVO.getCategoryId());
+        photoDao.save(photo);
+        return photoVO;
     }
 
     private ArrayList<PhotoVO> getPhotoVOByChatId(Long chatId) {

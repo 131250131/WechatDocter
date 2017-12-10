@@ -25,4 +25,7 @@ public class Photo2Chat {
     @Column(name = "chat_id")
     private Long chatId;
 
+    @Column(name = "is_active")
+    private Boolean active;
+
 }

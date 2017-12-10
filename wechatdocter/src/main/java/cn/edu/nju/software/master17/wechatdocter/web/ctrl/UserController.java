@@ -37,4 +37,14 @@ public class UserController {
         }
     }
 
+
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
+    public UserVO updateUserVO(@RequestBody @NotNull UserVO userVO) {
+        if(!userVO.getOpenId().isEmpty()) {
+            return userService.updateUser(userVO);
+        }else {
+            throw new HttpBadParamsException("OpenId can't be empty!");
+        }
+    }
+
 }

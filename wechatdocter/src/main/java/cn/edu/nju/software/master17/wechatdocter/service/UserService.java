@@ -11,5 +11,6 @@ public interface UserService {
 
     UserVO getUserByOpenId(String openId);
     UserVO saveUser(UserVO userVO);
+    UserVO updateUser(UserVO userVO);
 
 }
