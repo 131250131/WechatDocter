@@ -16,4 +16,6 @@ public class UserVO {
     private String sex;
     private String mobile;
     private String history;
+    private String password;
+    private String recent;
 }

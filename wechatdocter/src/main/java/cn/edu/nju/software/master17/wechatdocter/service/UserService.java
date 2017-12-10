@@ -10,5 +10,6 @@ import cn.edu.nju.software.master17.wechatdocter.web.data.UserVO;
 public interface UserService {
 
     UserVO getUserByOpenId(String openId);
+    UserVO saveUser(UserVO userVO);
 
 }

@@ -34,12 +34,14 @@ public class WorkOrderServiceImpl implements WorkOrderService {
         workOrder.setUserId(workOrderVO.getPatientId());
         workOrder.setDescription(workOrderVO.getDescription());
         workOrder = workOrderDao.save(workOrder);
-        ChatVO chatVO = new ChatVO();
-        chatVO.setWorkOrderId(workOrder.getId());
-        chatVO = chatService.addChat2WorkOrder(chatVO);
-        ArrayList<ChatVO> chatVOS  = new ArrayList<ChatVO>();
-        chatVOS.add(chatVO);
-        workOrderVO.setChats(chatVOS);
+        ArrayList<ChatVO> inputChats = workOrderVO.getChats();
+        ArrayList<ChatVO> outputChats  = new ArrayList<ChatVO>();
+        for(ChatVO chatVO: inputChats) {
+            chatVO.setWorkOrderId(workOrder.getId());
+            chatVO = chatService.addChat2WorkOrder(chatVO);
+            outputChats.add(chatVO);
+        }
+        workOrderVO.setChats(outputChats);
         workOrderVO.setDescription(workOrder.getDescription());
         workOrderVO.setPatientId(workOrder.getUserId());
         workOrderVO.setWorkOrderId(workOrder.getId());

@@ -31,4 +31,26 @@ public class UserServiceImpl implements UserService{
         userVO.setHistory(user.getHistory());
         return userVO;
     }
+
+    @Override
+    public UserVO saveUser(UserVO userVO) {
+        User user = new User();
+        user.setAge(userVO.getAge());
+        user.setHistory(userVO.getHistory());
+        user.setMobile(userVO.getName());
+        user.setName(userVO.getName());
+        user.setOpenId(userVO.getOpenId());
+        user.setPassword(userVO.getPassword());
+        user.setRecent(userVO.getRecent());
+        user.setSex(userVO.getSex().equals("male")?true:false);
+        user = userDao.save(user);
+        userVO.setPatientId(user.getId());
+        userVO.setOpenId(user.getOpenId());
+        userVO.setName(user.getName());
+        userVO.setAge(user.getAge());
+        userVO.setSex(user.isSex()?"male":"female");
+        userVO.setMobile(user.getMobile());
+        userVO.setHistory(user.getHistory());
+        return userVO;
+    }
 }

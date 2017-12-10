@@ -53,6 +53,7 @@ public class ChatServiceImpl implements ChatService{
         result.setSequenceId(chat.getSequenceId());
         result.setType(chatVO.getType());
         result.setWorkOrderId(chat.getWorkOrderId());
+        result.setChatId(chat.getId());
         return result;
     }
 
@@ -69,6 +70,26 @@ public class ChatServiceImpl implements ChatService{
             chatVO.setPhotos(getPhotoVOByChatId(chat.getId()));
             chatVO.setType(chat.getType()==1?"inquiry":"diagnostic");
         }
+        return result;
+    }
+
+    @Override
+    public ChatVO updateChat(ChatVO chatVO) {
+        ChatVO result = new ChatVO();
+        Chat chat = new Chat();
+        chat.setSequenceId(chatVO.getSequenceId());
+        chat.setCreateTime(chatVO.getTime());
+        chat.setWorkOrderId(chatVO.getWorkOrderId());
+        chat.setDescription(chatVO.getDescription());
+        chat.setType(chatVO.getType().equals("inquiry")?1:0);
+        chat.setId(chatVO.getChatId());
+        chat = chatDao.save(chat);
+        result.setPatientId(getUserIdByWorkOrderId(chat.getWorkOrderId()));
+        result.setDescription(chat.getDescription());
+        result.setSequenceId(chat.getSequenceId());
+        result.setType(chatVO.getType());
+        result.setWorkOrderId(chat.getWorkOrderId());
+        result.setChatId(chat.getId());
         return result;
     }
 

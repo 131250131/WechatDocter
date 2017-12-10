@@ -4,10 +4,9 @@ import cn.edu.nju.software.master17.wechatdocter.service.UserService;
 import cn.edu.nju.software.master17.wechatdocter.web.data.UserVO;
 import cn.edu.nju.software.master17.wechatdocter.web.exception.HttpBadParamsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -28,4 +27,14 @@ public class UserController {
             throw new HttpBadParamsException("OpenId can't be empty!");
         }
     }
+
+    @RequestMapping(value = "/user/openId/", method = RequestMethod.POST)
+    public UserVO saveUserVO(@RequestBody @NotNull UserVO userVO) {
+        if(!userVO.getOpenId().isEmpty()) {
+            return userService.saveUser(userVO);
+        }else {
+            throw new HttpBadParamsException("OpenId can't be empty!");
+        }
+    }
+
 }

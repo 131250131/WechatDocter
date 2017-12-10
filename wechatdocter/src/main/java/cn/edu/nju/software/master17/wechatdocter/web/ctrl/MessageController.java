@@ -48,6 +48,17 @@ public class MessageController {
         return result;
     }
 
+    @RequestMapping(value = "/message/chat", method = RequestMethod.PUT)
+    public ChatVO updateChat2WorkOrder(@RequestBody @NotNull ChatVO chatVO) {
+        ChatVO result = null;
+        if(chatVO.getWorkOrderId()!=null) {
+            result = this.chatService.updateChat(chatVO);
+        }else{
+            throw new HttpBadParamsException("workorderId can't be empty");
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/message/workorder/{workorderId}", method = RequestMethod.GET)
     public WorkOrderVO getWorkOrderDetail(@PathVariable("workorderId") Long workOrderId) {
         WorkOrderVO result = null;
