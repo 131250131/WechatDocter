@@ -33,7 +33,7 @@ public class User {
     @Column(name = "history")
     private String history;
 
-    @Column(name = "openId")
+    @Column(name = "open_id")
     private String openId;
 
     @Column(name = "recent")

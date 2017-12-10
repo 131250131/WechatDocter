@@ -47,6 +47,7 @@ public class ChatServiceImpl implements ChatService{
         chat.setWorkOrderId(chatVO.getWorkOrderId());
         chat.setCreateTime(new Timestamp(System.currentTimeMillis()));
         chat.setSequenceId(calculateSequenceIdForChat(chatVO.getWorkOrderId()));
+
         chat = chatDao.save(chat);
         result.setPatientId(getUserIdByWorkOrderId(chat.getWorkOrderId()));
         result.setDescription(chat.getDescription());
@@ -54,6 +55,13 @@ public class ChatServiceImpl implements ChatService{
         result.setType(chatVO.getType());
         result.setWorkOrderId(chat.getWorkOrderId());
         result.setChatId(chat.getId());
+        for (PhotoVO photoVO: chatVO.getPhotos()){
+            Photo photo = new Photo();
+            photo.setUrl(photoVO.getUrl());
+            photo.setUserId(chatVO.getChatId());
+            photo = photoDao.save(photo);
+        }
+        result.setPhotos(chatVO.getPhotos());
         return result;
     }
 

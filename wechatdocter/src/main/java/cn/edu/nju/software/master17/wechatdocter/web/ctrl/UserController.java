@@ -28,7 +28,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/user/openId/", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     public UserVO saveUserVO(@RequestBody @NotNull UserVO userVO) {
         if(!userVO.getOpenId().isEmpty()) {
             return userService.saveUser(userVO);
