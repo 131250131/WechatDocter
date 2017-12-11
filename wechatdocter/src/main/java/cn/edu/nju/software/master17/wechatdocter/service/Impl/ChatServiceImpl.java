@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -77,11 +76,11 @@ public class ChatServiceImpl implements ChatService{
             chatVO.setChatId(chat.getId());
             chatVO.setPhotos(getPhotoVOByChatId(chat.getId()));
             chatVO.setType(chat.getType()==1?"inquiry":"diagnostic");
+            result.add(chatVO);
         }
         return result;
     }
 
-    // photos need to be checked
     @Override
     public ChatVO updateChat(ChatVO chatVO) {
         ChatVO result = new ChatVO();
@@ -116,6 +115,7 @@ public class ChatServiceImpl implements ChatService{
         result.setType(chatVO.getType());
         result.setWorkOrderId(chat.getWorkOrderId());
         result.setChatId(chat.getId());
+        result.setPhotos(chatVO.getPhotos());
         return result;
     }
 
