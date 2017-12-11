@@ -34,16 +34,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserVO saveUser(UserVO userVO) {
-        User user = new User();
-        user.setAge(userVO.getAge());
-        user.setHistory(userVO.getHistory());
-        user.setMobile(userVO.getName());
-        user.setName(userVO.getName());
-        user.setOpenId(userVO.getOpenId());
-        user.setPassword(userVO.getPassword());
-        user.setRecent(userVO.getRecent());
-        user.setSex(userVO.getSex().equals("male")?true:false);
-        user = userDao.save(user);
+        User user = userDao.findByOpenId(userVO.getOpenId());
+        if( user == null) {
+            user.setAge(userVO.getAge());
+            user.setHistory(userVO.getHistory());
+            user.setMobile(userVO.getMobile());
+            user.setName(userVO.getName());
+            user.setOpenId(userVO.getOpenId());
+            user.setPassword(userVO.getPassword());
+            user.setRecent(userVO.getRecent());
+            user.setSex(userVO.getSex().equals("male")?true:false);
+            user = userDao.save(user);
+        }
         userVO.setPatientId(user.getId());
         userVO.setOpenId(user.getOpenId());
         userVO.setName(user.getName());
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         user.setAge(userVO.getAge());
         user.setHistory(userVO.getHistory());
-        user.setMobile(userVO.getName());
+        user.setMobile(userVO.getMobile());
         user.setName(userVO.getName());
         user.setOpenId(userVO.getOpenId());
         user.setPassword(userVO.getPassword());
@@ -76,6 +78,5 @@ public class UserServiceImpl implements UserService{
         userVO.setHistory(user.getHistory());
         return userVO;
     }
-
 
 }
