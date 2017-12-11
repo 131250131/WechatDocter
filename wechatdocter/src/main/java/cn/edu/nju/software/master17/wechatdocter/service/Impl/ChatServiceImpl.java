@@ -138,7 +138,7 @@ public class ChatServiceImpl implements ChatService{
 
     private ArrayList<PhotoVO> getPhotoVOByChatId(Long chatId) {
         ArrayList<PhotoVO> result = new ArrayList<PhotoVO>();
-        ArrayList<Photo2Chat> photo2Chats = photo2ChatDao.findByChatId(chatId);
+        ArrayList<Photo2Chat> photo2Chats = photo2ChatDao.findByChatIdAndActive(chatId, true);
         for(Photo2Chat photo2Chat: photo2Chats) {
             PhotoVO photoVO = new PhotoVO();
             Photo photo = photoDao.findOne(photo2Chat.getPhotoId());
