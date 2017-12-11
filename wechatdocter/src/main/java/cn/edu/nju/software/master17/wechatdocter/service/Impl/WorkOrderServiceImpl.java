@@ -43,6 +43,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
             chatVO = chatService.addChat2WorkOrder(chatVO);
             outputChats.add(chatVO);
         }
+        workOrderVO.setLastChat("patient");
         workOrderVO.setChats(outputChats);
         workOrderVO.setDescription(workOrder.getDescription());
         workOrderVO.setPatientId(workOrder.getUserId());
@@ -92,12 +93,24 @@ public class WorkOrderServiceImpl implements WorkOrderService {
         return result;
     }
 
+    @Override
+    public ArrayList<WorkOrderVO> getAllWorkOrderOfDocter(String lastChat) {
+        ArrayList<WorkOrderVO> result = new ArrayList<WorkOrderVO>();
+        Iterable<WorkOrder> iterable =  workOrderDao.findByLastChat(lastChat);
+        for(WorkOrder workOrder: iterable) {
+            WorkOrderVO workOrderVO = workOrder2WorkOrderVO(workOrder);
+            result.add(workOrderVO);
+        }
+        return result;
+    }
+
     private WorkOrderVO workOrder2WorkOrderVO(WorkOrder workOrder) {
         WorkOrderVO workOrderVO =  new WorkOrderVO();
         workOrderVO.setTime(workOrder.getUpdateTime());
         workOrderVO.setPatientId(workOrder.getUserId());
         workOrderVO.setWorkOrderId(workOrder.getId());
         workOrderVO.setDescription(workOrder.getDescription());
+        workOrderVO.setLastChat(workOrder.getLastChat());
         return workOrderVO;
     }
 }

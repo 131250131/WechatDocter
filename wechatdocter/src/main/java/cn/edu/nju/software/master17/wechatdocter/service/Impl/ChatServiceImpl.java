@@ -7,6 +7,7 @@ import cn.edu.nju.software.master17.wechatdocter.dao.WorkOrderDao;
 import cn.edu.nju.software.master17.wechatdocter.models.Chat;
 import cn.edu.nju.software.master17.wechatdocter.models.Photo;
 import cn.edu.nju.software.master17.wechatdocter.models.Photo2Chat;
+import cn.edu.nju.software.master17.wechatdocter.models.WorkOrder;
 import cn.edu.nju.software.master17.wechatdocter.service.ChatService;
 import cn.edu.nju.software.master17.wechatdocter.web.data.ChatVO;
 import cn.edu.nju.software.master17.wechatdocter.web.data.PhotoVO;
@@ -44,6 +45,14 @@ public class ChatServiceImpl implements ChatService{
         chat.setType(chatType);
         chat.setDescription(chatVO.getDescription());
         chat.setWorkOrderId(chatVO.getWorkOrderId());
+
+        WorkOrder workOrder =  workOrderDao.findById(chatVO.getWorkOrderId());
+        if(chatType==1) {
+            workOrder.setLastChat("patient");
+        }else{
+            workOrder.setLastChat("doctor");
+        }
+        workOrderDao.save(workOrder);
         chat.setCreateTime(new Timestamp(System.currentTimeMillis()));
         chat.setSequenceId(calculateSequenceIdForChat(chatVO.getWorkOrderId()));
         chat = chatDao.save(chat);

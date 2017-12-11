@@ -18,5 +18,6 @@ public class WorkOrderVO {
     private Timestamp time;
     private Long patientId;
     private String description;
+    private String lastChat;
 
 }

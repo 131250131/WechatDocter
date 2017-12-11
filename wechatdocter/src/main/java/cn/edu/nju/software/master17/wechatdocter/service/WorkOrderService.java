@@ -26,6 +26,6 @@ public interface WorkOrderService {
 
     WorkOrderVO getWorkOrderById(Long workOrderId);
 
-
+    ArrayList<WorkOrderVO> getAllWorkOrderOfDocter(String lastChat);
 
 }

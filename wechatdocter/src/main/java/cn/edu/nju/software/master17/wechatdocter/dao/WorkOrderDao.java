@@ -19,4 +19,6 @@ public interface WorkOrderDao extends CrudRepository<WorkOrder, Long>{
 
     WorkOrder findById(Long id);
 
+    ArrayList<WorkOrder> findByLastChat(String lastChat);
+
 }

@@ -31,6 +31,9 @@ public class WorkOrder {
     @Column(name = "update_time")
     private Timestamp updateTime;
 
+    @Column(name = "last_chat")
+    private String lastChat;
+
     // 我暂时没有考虑工单的已读未读
     // 表结构方面还差一个照片和工单的关系表
 
