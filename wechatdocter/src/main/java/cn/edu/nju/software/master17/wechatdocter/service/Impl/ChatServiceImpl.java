@@ -107,7 +107,7 @@ public class ChatServiceImpl implements ChatService{
         }
         for(PhotoVO photoVO: chatVO.getPhotos()) {
             Photo2Chat photo2Chat = photo2ChatDao.findByPhotoIdAndChatId(photoVO.getId(), chat.getId());
-            if(photo2Chat==null) {
+            if(photo2Chat!=null) {
                 photo2Chat.setActive(true);
                 photo2ChatDao.save(photo2Chat);
             } else {
