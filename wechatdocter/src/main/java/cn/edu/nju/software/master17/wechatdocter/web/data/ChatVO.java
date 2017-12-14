@@ -18,7 +18,7 @@ public class ChatVO {
     private Long workOrderId;
     private Long patientId;
     private Integer sequenceId;
-    private ArrayList<PhotoVO> photos;
+    private ArrayList<PhotoVO> photos = new ArrayList<>();
     private Timestamp time;
     private String type;
 }
